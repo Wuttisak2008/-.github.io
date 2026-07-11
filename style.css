@@ -1,1 +1,48 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
+body{
+    font-family:Arial,sans-serif;
+    background:#111;
+    color:white;
+}
+
+header{
+    text-align:center;
+    padding:40px;
+}
+
+.gallery{
+    width:90%;
+    margin:auto;
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:20px;
+
+    padding-bottom:40px;
+}
+
+.card{
+    overflow:hidden;
+    border-radius:15px;
+    background:#222;
+    transition:.3s;
+}
+
+.card:hover{
+    transform:scale(1.05);
+}
+
+.card img{
+    width:100%;
+    display:block;
+}
+
+footer{
+    text-align:center;
+    padding:20px;
+}
