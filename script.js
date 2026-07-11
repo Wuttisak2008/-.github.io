@@ -1,164 +1,124 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Me | Portfolio</title>
+// ============================
+// เอฟเฟกต์โหลดหน้า
+// ============================
 
-    <link rel="stylesheet" href="style.css">
-</head>
+window.addEventListener("load", () => {
+    document.body.classList.add("loaded");
+});
 
-<body>
+// ============================
+// Scroll Animation
+// ============================
 
-<header>
+const observer = new IntersectionObserver(entries => {
 
-    <div class="logo">
-        <h2>Portfolio</h2>
-    </div>
+    entries.forEach(entry => {
 
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html" style="color:#38bdf8;">About</a></li>
-            <li><a href="education.html">Education</a></li>
-            <li><a href="certificates.html">Certificates</a></li>
-            <li><a href="activities.html">Activities</a></li>
-            <li><a href="awards.html">Awards</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="leadership.html">Leadership</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-    </nav>
+        if(entry.isIntersecting){
+            entry.target.classList.add("show");
+        }
 
-</header>
+    });
 
-<section class="about">
+});
 
-    <h1>About Me</h1>
+document.querySelectorAll("section,.card").forEach(el=>{
+    el.classList.add("hidden");
+    observer.observe(el);
+});
 
-    <div class="about-box">
+// ============================
+// ปุ่ม Back To Top
+// ============================
 
-        <div class="about-image">
-            <img src="images/profile.jpg" alt="">
-        </div>
+const topBtn=document.createElement("button");
 
-        <div class="about-text">
+topBtn.innerHTML="⬆";
 
-            <h2>ชื่อ-นามสกุล</h2>
+topBtn.className="top-btn";
 
-            <p>
-                นักเรียนระดับชั้นมัธยมศึกษาปีที่ 6
-                โรงเรียน.............................
-            </p>
+document.body.appendChild(topBtn);
 
-            <p>
-                มีความสนใจด้านเทคโนโลยี การเขียนโปรแกรม
-                IoT, AI และการพัฒนาเว็บไซต์
-            </p>
+window.addEventListener("scroll",()=>{
 
-            <table>
+    if(window.scrollY>400){
 
-                <tr>
-                    <td>ชื่อ</td>
-                    <td>:</td>
-                    <td>................................</td>
-                </tr>
+        topBtn.style.display="block";
 
-                <tr>
-                    <td>วันเกิด</td>
-                    <td>:</td>
-                    <td>................................</td>
-                </tr>
+    }else{
 
-                <tr>
-                    <td>อายุ</td>
-                    <td>:</td>
-                    <td>................................</td>
-                </tr>
+        topBtn.style.display="none";
 
-                <tr>
-                    <td>โรงเรียน</td>
-                    <td>:</td>
-                    <td>................................</td>
-                </tr>
+    }
 
-                <tr>
-                    <td>คณะที่สมัคร</td>
-                    <td>:</td>
-                    <td>................................</td>
-                </tr>
+});
 
-            </table>
+topBtn.onclick=()=>{
 
-        </div>
+    window.scrollTo({
 
-    </div>
+        top:0,
 
-</section>
+        behavior:"smooth"
 
-<section class="skills">
+    });
 
-    <h1>My Skills</h1>
+};
 
-    <div class="skill-box">
+// ============================
+// Lightbox Gallery
+// ============================
 
-        <div class="skill">
-            <h3>HTML</h3>
-            <div class="bar">
-                <div class="fill" style="width:90%;">90%</div>
-            </div>
-        </div>
+const images=document.querySelectorAll(".gallery-grid img");
 
-        <div class="skill">
-            <h3>CSS</h3>
-            <div class="bar">
-                <div class="fill" style="width:85%;">85%</div>
-            </div>
-        </div>
+const lightbox=document.createElement("div");
 
-        <div class="skill">
-            <h3>JavaScript</h3>
-            <div class="bar">
-                <div class="fill" style="width:75%;">75%</div>
-            </div>
-        </div>
+lightbox.className="lightbox";
 
-        <div class="skill">
-            <h3>Arduino / IoT</h3>
-            <div class="bar">
-                <div class="fill" style="width:90%;">90%</div>
-            </div>
-        </div>
+document.body.appendChild(lightbox);
 
-    </div>
+images.forEach(img=>{
 
-</section>
+    img.addEventListener("click",()=>{
 
-<section class="hobby">
+        lightbox.classList.add("active");
 
-    <h1>My Hobby</h1>
+        const image=document.createElement("img");
 
-    <div class="gallery-grid">
+        image.src=img.src;
 
-        <img src="images/hobby1.jpg">
-        <img src="images/hobby2.jpg">
-        <img src="images/hobby3.jpg">
-        <img src="images/hobby4.jpg">
-        <img src="images/hobby5.jpg">
-        <img src="images/hobby6.jpg">
+        while(lightbox.firstChild){
 
-    </div>
+            lightbox.removeChild(lightbox.firstChild);
 
-</section>
+        }
 
-<footer>
+        lightbox.appendChild(image);
 
-    <h3>Portfolio Website</h3>
+    });
 
-    <p>© 2026 ชื่อของคุณ</p>
+});
 
-</footer>
+lightbox.addEventListener("click",()=>{
 
-</body>
-</html>
+    lightbox.classList.remove("active");
+
+});
+
+// ============================
+// Cursor Glow
+// ============================
+
+const glow=document.createElement("div");
+
+glow.className="cursor-glow";
+
+document.body.appendChild(glow);
+
+document.addEventListener("mousemove",(e)=>{
+
+    glow.style.left=e.pageX+"px";
+
+    glow.style.top=e.pageY+"px";
+
+});
